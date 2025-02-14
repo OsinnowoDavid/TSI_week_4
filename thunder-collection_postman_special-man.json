@@ -1,0 +1,147 @@
+{
+    "info": {
+        "_postman_id": "68700f93-4e5a-46a4-80c1-27aaeacdabbd",
+        "name": "special-man",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "http://localhost:4040/api/login",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:4040/api/login",
+                    "path": [
+                        "api",
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"email\":\"daniel@gmail.com\",\n  \"password\":\"passwerod\"\n}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:4040/api/register",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:4040/api/register",
+                    "path": [
+                        "api",
+                        "register"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\":\"david\",\n  \"email\":\"daniel@gmail.com\",\n  \"password\":\"passwerod\"\n}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:4040/api/addcourse",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:4040/api/addcourse",
+                    "path": [
+                        "api",
+                        "addcourse"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"coursename\":\"biology\",\n  \"coursetitle\":\"plant\",\n  \"courseduration\":\"3weeks\",\n  \"courseprice\":\"$300\",\n  \"courseinstructor\":\"MR Ayobami\"\n}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:4040/api/getcourse",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:4040/api/deletecourse/67af43211198f9340bdabe00",
+                    "path": [
+                        "api",
+                        "deletecourse",
+                        "67af43211198f9340bdabe00"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:4040/api/getcourse",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:4040/api/getcourse",
+                    "path": [
+                        "api",
+                        "getcourse"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:4040/api/update/67af41ada017b793104f63f7",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:4040/api/update/67af41ada017b793104f63f7",
+                    "path": [
+                        "api",
+                        "update",
+                        "67af41ada017b793104f63f7"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4040"
+                }
+            }
+        }
+    ]
+}
