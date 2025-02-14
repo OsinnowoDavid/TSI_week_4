@@ -14,6 +14,9 @@ connectdb()
 app.use("/api",authRoutes)
 app.use("/api",courseRoutes)
 
+app.get("/",(req,res)=>{
+    res.send("Welcome to e-learning")
+})
 
 app.listen( port,() =>{
     console.log("e-learning server is running ")
