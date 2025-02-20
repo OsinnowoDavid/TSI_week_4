@@ -5,6 +5,7 @@ import connectdb from "./config/mongodb.js"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
 import courseRoutes from "./routes/courseroutes.js"
+import aggregateRoutes from "./routes/aggregate-routes.js"
 dotenv.config()
 const app = express()
 const port = process.env.PORT
@@ -13,6 +14,7 @@ app.use(bodyParser.json())
 connectdb()
 app.use("/api",authRoutes)
 app.use("/api",courseRoutes)
+app.use("/api",aggregateRoutes)
 
 app.get("/",(req,res)=>{
     res.send("Welcome to e-learning")

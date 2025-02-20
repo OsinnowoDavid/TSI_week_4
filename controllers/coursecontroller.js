@@ -1,16 +1,38 @@
 import courseModel from "../models/courseSchema.js";
+import { validate_course } from "./validator.js";
+import transporter from "../config/nodemailer.js";
+import dotenv from "dotenv";
+dotenv.config();
+// Add course
 const addcourse = async (req, res) => {
     try {
-        const { coursename, coursetitle, courseduration, courseprice, courseinstructor } = req.body;
-
-        if (!coursename || !coursetitle || !courseduration || !courseprice || !courseinstructor) {
-            return res.status(400).json({ message: "All fields are required" });
+        const { error, value } = validate_course(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.message });
         }
-        const course = { courseduration, courseprice, courseinstructor, coursename, coursetitle };
 
-        const newcourse = new courseModel(course);
-        await newcourse.save();
-        res.status(201).json({ message: "Course added successfully" }); // Added success response
+        if (value) {
+            const { coursename, coursetitle, courseduration, courseprice, courseinstructor ,email} = value;
+            const newcourse = new courseModel({ coursename, coursetitle, courseduration, courseprice, courseinstructor });
+
+
+            await newcourse.save();
+
+            
+        const result = await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email, // Ensure adminEmail is correctly passed here
+            subject: "Welcome to E-learning ",
+            text: `Welcome to E-learning. Your course has been created with coursename: ${coursename} and coursetitle: ${coursetitle}`,
+
+        });
+        
+        res.status(200).json({ success: true, message: "Registered successfully" });
+
+
+           
+        }
+
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ message: error.message });
@@ -54,4 +76,38 @@ const getcourses = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
   }
-export { addcourse, updatecourse, deletecourse, getcourses };
+
+  const enroll_course = async (req, res) => {
+    try {
+        const { error, value } = validate_course(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.message });
+        }
+
+        if (value) {
+            const { coursename, coursetitle, courseduration, courseprice, courseinstructor ,email} = value;
+            const newcourse = new courseModel({ coursename, coursetitle, courseduration, courseprice, courseinstructor });
+
+
+            await newcourse.save();
+
+            
+        const result = await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email, // Ensure adminEmail is correctly passed here
+            subject: "Welcome to E-learning ",
+            text: `Welcome to E-learning.you have successfully enroll for a new course  with coursename: ${coursename} and coursetitle: ${coursetitle}`,
+
+        });
+        
+        res.status(200).json({ success: true, message: "Registered successfully" });
+
+
+           
+        }
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: error.message });
+    }}
+export { addcourse, updatecourse, deletecourse, getcourses ,enroll_course};

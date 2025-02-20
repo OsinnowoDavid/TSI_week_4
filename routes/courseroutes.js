@@ -1,9 +1,11 @@
 import express from "express"
-import { addcourse, updatecourse, deletecourse, getcourses } from "../controllers/coursecontroller.js"
+import authorizationRole from "../middlewear/rolebaseauth.js"
+import { addcourse, updatecourse, deletecourse, getcourses ,enroll_course} from "../controllers/coursecontroller.js"
 const courseroutes = express.Router()
-courseroutes.post("/addcourse", addcourse)
-courseroutes.get("/getcourse", getcourses)
-courseroutes.delete("/deletecourse/:id", deletecourse)
-courseroutes.put("/update/:id", updatecourse)
+courseroutes.post("/addcourse",authorizationRole("instructor"), addcourse)
+courseroutes.get("/getcourse",authorizationRole('student'), getcourses)
+courseroutes.delete("/deletecourse/:id", authorizationRole("instructor"),deletecourse)
+courseroutes.put("/update/:id",authorizationRole("instructor"), updatecourse)
+courseroutes.post("/enroll",authorizationRole("student"), enroll_course)
 
 export default courseroutes
