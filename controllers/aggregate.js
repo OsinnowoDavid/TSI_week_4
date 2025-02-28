@@ -18,7 +18,7 @@ const getstats = async (req, res) => {
                 }
             }
         ]);
-        console.log("Aggregation result:", stats);
+    
         res.status(200).json({ success: true, data: stats });
     } catch (error) {
         console.error("Aggregation error:", error);

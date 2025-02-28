@@ -110,4 +110,14 @@ const getcourses = async (req, res) => {
         console.log(error.message);
         res.status(500).json({ message: error.message });
     }}
-export { addcourse, updatecourse, deletecourse, getcourses ,enroll_course};
+    const getCourseById = async (req,res) =>{
+        try {
+            const {id} = req.params
+            const getCourseWithId = await courseModel.findBy(id)
+            res.status(200).json(getCourseWithId)
+        } catch (error) {
+            res.json({success:false, message:error.message})
+        }
+    }
+
+export { addcourse, updatecourse, deletecourse, getcourses ,enroll_course,getCourseById};

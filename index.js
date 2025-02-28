@@ -7,7 +7,7 @@ import dotenv from "dotenv"
 import courseRoutes from "./routes/courseroutes.js"
 import aggregateRoutes from "./routes/aggregate-routes.js"
 dotenv.config()
-const app = express()
+export const app = express()
 const port = process.env.PORT
 app.use(cors())
 app.use(bodyParser.json())

@@ -1,5 +1,5 @@
 import userModel from "../models/userSchema.js";
-// import adminModel from "../models/adminSchema.js"; // Corrected import
+import adminModel from "../models/adminSchema.js"; // Corrected import
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {validate} from "./validator.js";
@@ -31,6 +31,7 @@ const register = async (req, res) => {
             password: hashPassword,
         });
         await user.save();
+        res.sendStatus(200).json({ success: true, message: "Registered successfully" });
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email, // Ensure email is correctly passed here
@@ -202,24 +203,19 @@ const sendresetOpt = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        // if (!isValidEmail(user.email)) { // Changed adminEmail to email
-        //     return res.status(400).json({ success: false, message: "Invalid email address" });
-        // }
-
         const OTP = String(Math.floor(100000 + Math.random() * 900000));
         user.resetOpt = OTP;
         user.resetotpexpireat = Date.now() + 15 * 60 * 1000;
 
         await user.save();
 
-        
-         await transporter.sendMail({
-            rom: process.env.EMAIL_USER,
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
             to: email, // Changed adminEmail to email
             subject: "Password reset OTP",
             text: `Your OTP for resetting your password is ${OTP}. Use this OTP to proceed with resetting your password.`,
-         })
-        
+        });
+
         return res.json({ success: true, message: "OTP sent to your email" });
     } catch (error) {
         console.log(error);
@@ -228,15 +224,13 @@ const sendresetOpt = async (req, res) => {
 };
 
 const resetpassword = async (req, res) => {
-    // const { email, OTP, newPassword } = req.body; // Changed adminEmail to email
-
-    // if (!email || !OTP || !newPassword) { // Changed adminEmail to email
-    //     return res.json({ success: false, message: "Email, OTP, and new password are required" });
-    // }
-
-
     const {value, error} = reset_password_validation(req.body);
 
+    if (error) {
+        return res.json({ success: false, message: error.message });
+    }
+
+    const { email, OTP, newPassword } = value;
 
     try {
         const user = await adminModel.findOne({ email }); // Changed adminEmail to email
